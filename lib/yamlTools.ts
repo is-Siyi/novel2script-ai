@@ -1,9 +1,9 @@
 import yaml from "js-yaml";
-import Ajv from "ajv";
+import Ajv2020 from "ajv/dist/2020";
 import schema from "@/schemas/script.schema.json";
 import type { ScriptDocument, ValidationResult } from "./types";
 
-const ajv = new Ajv({ allErrors: true, strict: false });
+const ajv = new Ajv2020({ allErrors: true, strict: false });
 const validateScript = ajv.compile(schema);
 
 export function toYaml(script: ScriptDocument): string {
