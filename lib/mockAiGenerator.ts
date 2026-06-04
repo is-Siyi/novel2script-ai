@@ -60,10 +60,15 @@ function buildLogline(chapters: ParsedChapter[], style: string): string {
 
 function inferCharacters(chapters: ParsedChapter[]): ScriptCharacter[] {
   const text = chapters.map((chapter) => chapter.content).join("\n");
-  const quotedNames = Array.from(text.matchAll(/([一-龥]{2,4})(说|问|喊|低声|笑道)/g)).map(
+  const knownNameCandidates = ["林夏", "顾川", "周明", "陈舟", "沈安", "陆远", "苏晴"];
+  const explicitNames = knownNameCandidates.filter((name) => text.includes(name));
+  const dialogueNames = Array.from(text.matchAll(/(?:^|[。！？\n])\s*([一-龥]{2,3})(?:说|问|喊|低声说|笑道)/g)).map(
     (match) => match[1]
   );
-  const uniqueNames = Array.from(new Set(quotedNames)).slice(0, 4);
+  const blacklist = ["如果", "对我", "愤怒", "开始", "真正", "最后", "里面", "这些"];
+  const uniqueNames = Array.from(new Set([...explicitNames, ...dialogueNames]))
+    .filter((name) => !blacklist.some((word) => name.includes(word)))
+    .slice(0, 4);
   const names = uniqueNames.length >= 2 ? uniqueNames : ["林夏", "顾川", "周明"];
 
   return names.slice(0, 4).map((name, index) => ({
