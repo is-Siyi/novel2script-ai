@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://novel2script.ai/schemas/script.schema.json",
+  "title": "Novel2Script Script YAML Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "logline",
+    "genre",
+    "format",
+    "style",
+    "detailLevel",
+    "characters",
+    "chapters",
+    "metadata"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "logline": {
+      "type": "string",
+      "minLength": 1
+    },
+    "genre": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": ["影视剧", "短剧", "舞台剧", "分镜脚本"]
+    },
+    "style": {
+      "type": "string",
+      "enum": ["现实主义", "悬疑", "喜剧", "青春", "古风"]
+    },
+    "detailLevel": {
+      "type": "string",
+      "enum": ["简版", "标准版", "详细版"]
+    },
+    "characters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/character"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/chapter"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceChapterCount", "generatedBy", "schemaVersion"],
+      "properties": {
+        "sourceChapterCount": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "generatedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "character": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "role", "description", "motivation"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motivation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "summary", "scenes"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/scene"
+          }
+        }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "chapterId",
+        "title",
+        "location",
+        "time",
+        "atmosphere",
+        "summary",
+        "beats"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chapterId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "minLength": 1
+        },
+        "atmosphere": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "beats": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/beat"
+          }
+        }
+      }
+    },
+    "beat": {
+      "type": "object",
+      "required": ["type"],
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "required": ["type", "action"],
+          "properties": {
+            "type": {
+              "const": "action"
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "required": ["type", "character", "content"],
+          "properties": {
+            "type": {
+              "const": "dialogue"
+            },
+            "character": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "required": ["type", "narration"],
+          "properties": {
+            "type": {
+              "const": "narration"
+            },
+            "narration": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "required": ["type", "transition"],
+          "properties": {
+            "type": {
+              "const": "transition"
+            },
+            "transition": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}
