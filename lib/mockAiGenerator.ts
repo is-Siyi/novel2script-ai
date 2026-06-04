@@ -69,7 +69,7 @@ function inferCharacters(chapters: ParsedChapter[]): ScriptCharacter[] {
   const uniqueNames = Array.from(new Set([...explicitNames, ...dialogueNames]))
     .filter((name) => !blacklist.some((word) => name.includes(word)))
     .slice(0, 4);
-  const names = uniqueNames.length >= 2 ? uniqueNames : ["林夏", "顾川", "周明"];
+  const names = completeCharacterNames(uniqueNames);
 
   return names.slice(0, 4).map((name, index) => ({
     id: `char-${index + 1}`,
@@ -84,6 +84,16 @@ function inferCharacters(chapters: ParsedChapter[]): ScriptCharacter[] {
         ? "找到改变现状的方法。"
         : "守住自己的秘密、关系或目标。",
   }));
+}
+
+function completeCharacterNames(names: string[]): string[] {
+  const fallbackNames = names.length === 0
+    ? ["主角", "关键人物", "反对者", "见证者"]
+    : ["关键人物", "反对者", "见证者"];
+  const unusedFallbacks = fallbackNames.filter((name) => !names.includes(name));
+  const missingCount = Math.max(2 - names.length, 0);
+
+  return [...names, ...unusedFallbacks.slice(0, missingCount)];
 }
 
 function buildScenes(
