@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f7f4ef;
+}
+
+body {
+  min-height: 100vh;
+  color: #172033;
+  background:
+    linear-gradient(180deg, rgba(15, 118, 110, 0.10), transparent 320px),
+    #f7f4ef;
+}
+
+button,
+textarea,
+select,
+input {
+  font: inherit;
+}
+
+textarea {
+  tab-size: 2;
+}
