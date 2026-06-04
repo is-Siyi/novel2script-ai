@@ -1,0 +1,95 @@
+title: 雨中的旧书店
+logline: 林夏在悬疑气质的故事中面对关键选择：她必须决定是否出售父亲手稿，或追查手稿背后的失踪剧本。
+genre: 悬疑影视剧
+format: 影视剧
+style: 悬疑
+detailLevel: 标准版
+characters:
+  - id: char-1
+    name: 林夏
+    role: 主角
+    description: 试图离开小城的年轻作者，被父亲手稿重新拉回旧事。
+    motivation: 摆脱过去，同时弄清父亲留下手稿的真正含义。
+  - id: char-2
+    name: 顾川
+    role: 关键关系人物
+    description: 旧书店店主，掌握失踪剧本和废弃剧场的线索。
+    motivation: 寻找哥哥周明失踪的真相。
+  - id: char-3
+    name: 周明
+    role: 缺席的推动者
+    description: 多年前失踪的演员，所有线索都指向他最后一场演出。
+    motivation: 通过留下的痕迹引导后来者完成未竟之事。
+chapters:
+  - id: chapter-1
+    title: 第一章 雨中的旧书店
+    summary: 林夏带着父亲手稿来到旧书店，发现手稿中藏着失踪剧本的线索。
+    scenes:
+      - id: scene-1-1
+        chapterId: chapter-1
+        title: 旧书店的交易
+        location: 青石巷旧书店
+        time: 雨夜
+        atmosphere: 不安
+        summary: 林夏想卖掉手稿离开小城，顾川却指出手稿并不普通。
+        beats:
+          - type: action
+            action: 林夏抱着纸箱进入旧书店，雨水从她的外套边缘滴落。
+          - type: dialogue
+            character: 顾川
+            content: 这不是普通手稿。
+          - type: dialogue
+            character: 林夏
+            content: 对我来说，它只是过去。
+          - type: narration
+            narration: 旧挂钟停在三点，像在等待某个迟到多年的人。
+          - type: transition
+            transition: 切至手稿夹层中的车票特写。
+  - id: chapter-2
+    title: 第二章 停在三点的钟
+    summary: 林夏和顾川来到废弃剧场，发现周明失踪与父亲最后一次排练有关。
+    scenes:
+      - id: scene-2-1
+        chapterId: chapter-2
+        title: 废弃剧场的掌声
+        location: 废弃剧场
+        time: 午后
+        atmosphere: 紧张
+        summary: 舞台灯突然亮起，空观众席传来掌声，线索指向“归场”。
+        beats:
+          - type: action
+            action: 舞台上的白布被风掀起，露出积灰的道具箱。
+          - type: dialogue
+            character: 林夏
+            content: 我父亲到底在这里排练了什么？
+          - type: dialogue
+            character: 顾川
+            content: 一部没有结局的剧本。
+          - type: narration
+            narration: 掌声从空座位间升起，像有人躲在黑暗里排练谢幕。
+          - type: transition
+            transition: 推至纽扣背面的“归场”二字。
+  - id: chapter-3
+    title: 第三章 归场的人
+    summary: 顾川坦白身份，林夏在暗门后的排练室里理解父亲真正的邀请。
+    scenes:
+      - id: scene-3-1
+        chapterId: chapter-3
+        title: 暗门后的排练室
+        location: 旧书店暗室
+        time: 深夜
+        atmosphere: 暗流涌动
+        summary: 林夏发现父亲留下的便签，决定留下完成未完成的剧本。
+        beats:
+          - type: action
+            action: 书架缓缓移开，露出贴满便签的小排练室。
+          - type: dialogue
+            character: 林夏
+            content: 你从一开始就在利用我。
+          - type: dialogue
+            character: 顾川
+            content: 我只是希望有人愿意回头看一眼。
+          - type: narration
+            narration: 林夏读到最后一张便签，终于明白父亲留下的不是谜题，而是邀请。
+          - type: transition
+            transition: 淡出，留下桌上摊开的未完成剧本。
