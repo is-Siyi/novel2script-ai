@@ -70,6 +70,10 @@ examples/                原创示例小说和示例剧本 YAML
 docs/                    产品设计、Schema 说明和演示文档
 ```
 
+## PR 与开发记录
+
+比赛评审可查看 [PR and Commit Record](docs/PR_COMMIT_RECORD.md)，其中记录了当前仓库的 PR、commit、依赖与原创声明。后续 PR 使用 `.github/PULL_REQUEST_TEMPLATE.md`，确保功能描述、实现思路、测试方式和原创/依赖声明完整。
+
 ## Demo 视频
 
 待补充：录制 3 分钟演示视频后，将可访问链接放到这里。
