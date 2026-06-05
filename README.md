@@ -16,6 +16,7 @@ Novel2Script AI 是一个面向小说作者的 AI 剧本改编助手。用户粘
 - 生成配置：剧本类型、风格、详细程度
 - mock AI 生成结构化剧本对象
 - YAML 展示与在线编辑
+- YAML 字段名根据小说语言自动切换中文或英文
 - JSON Schema 校验与错误提示
 - 导出 YAML、导出 Markdown、复制 YAML
 

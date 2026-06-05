@@ -1,13 +1,15 @@
 import yaml from "js-yaml";
 import Ajv2020 from "ajv/dist/2020";
 import schema from "@/schemas/script.schema.json";
+import type { ContentLanguage } from "./language";
+import { localizeYamlObject, normalizeYamlObject } from "./localizedYaml";
 import type { ScriptDocument, ValidationResult } from "./types";
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 const validateScript = ajv.compile(schema);
 
-export function toYaml(script: ScriptDocument): string {
-  return yaml.dump(script, {
+export function toYaml(script: ScriptDocument, language: ContentLanguage = "en"): string {
+  return yaml.dump(localizeYamlObject(script, language), {
     noRefs: true,
     lineWidth: 120,
     sortKeys: false,
@@ -15,10 +17,10 @@ export function toYaml(script: ScriptDocument): string {
 }
 
 export function parseYaml(input: string): unknown {
-  return yaml.load(input);
+  return normalizeYamlObject(yaml.load(input));
 }
 
-export function validateScriptYaml(input: string): ValidationResult {
+export function validateScriptYaml(input: string, language = inferYamlLanguage(input)): ValidationResult {
   try {
     const parsed = parseYaml(input);
     const valid = validateScript(parsed);
@@ -32,15 +34,59 @@ export function validateScriptYaml(input: string): ValidationResult {
       errors:
         validateScript.errors?.map((error) => {
           const path = error.instancePath || "/";
-          return `${path}: ${error.message}`;
-        }) || ["未知 Schema 校验错误"],
+          return `${formatErrorPath(path, language)}: ${formatErrorMessage(error.message || "", language)}`;
+        }) || [language === "zh" ? "未知 Schema 校验错误" : "Unknown schema validation error"],
     };
   } catch (error) {
     return {
       valid: false,
-      errors: [`YAML 格式错误：${error instanceof Error ? error.message : String(error)}`],
+      errors: [
+        language === "zh"
+          ? `YAML 格式错误：${error instanceof Error ? error.message : String(error)}`
+          : `YAML syntax error: ${error instanceof Error ? error.message : String(error)}`,
+      ],
     };
   }
+}
+
+function inferYamlLanguage(input: string): ContentLanguage {
+  return /(^|\n)\s*(标题|一句话梗概|题材|角色列表|章节列表|场景列表|节拍)\s*:/u.test(input)
+    ? "zh"
+    : "en";
+}
+
+function formatErrorPath(path: string, language: ContentLanguage): string {
+  if (language === "en") return path;
+
+  return localizeSchemaText(path);
+}
+
+function formatErrorMessage(message: string, language: ContentLanguage): string {
+  if (language === "en") return message;
+  return localizeSchemaText(message);
+}
+
+function localizeSchemaText(text: string): string {
+  return text
+    .replace(/title/g, "标题")
+    .replace(/logline/g, "一句话梗概")
+    .replace(/genre/g, "题材")
+    .replace(/detailLevel/g, "详细程度")
+    .replace(/characters/g, "角色列表")
+    .replace(/chapters/g, "章节列表")
+    .replace(/scenes/g, "场景列表")
+    .replace(/metadata/g, "元数据")
+    .replace(/location/g, "地点")
+    .replace(/time/g, "时间")
+    .replace(/atmosphere/g, "氛围")
+    .replace(/summary/g, "摘要")
+    .replace(/beats/g, "节拍")
+    .replace(/action/g, "动作")
+    .replace(/dialogue/g, "对白")
+    .replace(/narration/g, "旁白")
+    .replace(/transition/g, "转场")
+    .replace(/character/g, "角色")
+    .replace(/content/g, "内容");
 }
 
 export function scriptToMarkdown(script: ScriptDocument): string {

@@ -114,6 +114,36 @@ transition: string
 - `narration` 承接小说中难以视觉化但仍有价值的信息。
 - `transition` 描述场景衔接，适合影视和分镜脚本。
 
+## 中英文字段显示
+
+内部 JSON Schema 保持英文规范字段，便于程序校验和后续 API 集成。YAML 编辑器会根据上传小说的主要语言自动切换显示字段：
+
+| Schema 字段 | 中文 YAML 显示 |
+| --- | --- |
+| `title` | `标题` |
+| `logline` | `一句话梗概` |
+| `genre` | `题材` |
+| `characters` | `角色列表` |
+| `chapters` | `章节列表` |
+| `scenes` | `场景列表` |
+| `location` | `地点` |
+| `time` | `时间` |
+| `atmosphere` | `氛围` |
+| `summary` | `摘要` |
+| `beats` | `节拍` |
+| `action` | `动作` |
+| `dialogue` | `对白` |
+| `narration` | `旁白` |
+| `transition` | `转场` |
+| `character` | `角色` |
+| `content` | `内容` |
+
+设计原因：
+
+- 英文小说默认输出英文 YAML 字段，方便技术系统继续处理。
+- 中文小说默认输出中文 YAML 字段，降低小说作者理解结构的成本。
+- 校验时会先把中文字段名规范化为英文 Schema 字段，再使用 JSON Schema 校验，因此中文 YAML 和英文 YAML 都能被同一套结构规则约束。
+
 ## 校验策略
 
 本项目使用 `ajv` 读取 JSON Schema，对 YAML 解析后的对象进行校验。这样可以同时检查：
