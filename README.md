@@ -27,8 +27,9 @@ Novel2Script AI 是一个面向小说作者的 AI 剧本改编助手。用户粘
 - js-yaml
 - ajv
 - zod
+- lucide-react
 
-当前版本默认使用 `mockAiGenerator`，不依赖真实 API Key。原创部分包括示例小说、mock 生成逻辑、YAML Schema、交互界面和文档。
+当前版本默认使用 `mockAiGenerator`，不依赖真实 API Key。`lucide-react` 仅用于界面图标。原创部分包括示例小说、mock 生成逻辑、YAML Schema、交互界面和文档。
 
 ## 安装运行
 
