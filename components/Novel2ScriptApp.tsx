@@ -119,7 +119,7 @@ export function Novel2ScriptApp() {
               Novel2Script AI
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">
-              面向小说作者的 AI 剧本改编助手，把三章以上小说快速转换为可编辑、可校验、可导出的结构化剧本 YAML。
+              面向小说作者的 AI 剧本改编助手，把小说快速转换为可编辑、可校验、可导出的结构化剧本 YAML。
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
