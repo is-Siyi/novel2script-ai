@@ -18,6 +18,7 @@ import {
   Wand2,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { detectTextLanguage } from "@/lib/language";
 import { parseNovelChapters } from "@/lib/novelParser";
 import { mockAiGenerateScript } from "@/lib/mockAiGenerator";
 import { downloadTextFile } from "@/lib/download";
@@ -50,7 +51,11 @@ export function Novel2ScriptApp() {
   const [copied, setCopied] = useState(false);
 
   const chapters = useMemo(() => parseNovelChapters(novelText), [novelText]);
-  const validation = useMemo(() => (yamlText ? validateScriptYaml(yamlText) : null), [yamlText]);
+  const sourceLanguage = useMemo(() => detectTextLanguage(novelText), [novelText]);
+  const validation = useMemo(
+    () => (yamlText ? validateScriptYaml(yamlText, sourceLanguage) : null),
+    [sourceLanguage, yamlText]
+  );
   const canGenerate = chapters.length >= 3;
   const totalWordCount = chapters.reduce((sum, chapter) => sum + chapter.wordCount, 0);
   const sceneCount =
@@ -78,12 +83,12 @@ export function Novel2ScriptApp() {
     if (!canGenerate) return;
     const generated = mockAiGenerateScript(chapters, config);
     setScript(generated);
-    setYamlText(toYaml(generated));
+    setYamlText(toYaml(generated, sourceLanguage));
     setCopied(false);
   }
 
   function validateAndSync() {
-    const result = validateScriptYaml(yamlText);
+    const result = validateScriptYaml(yamlText, sourceLanguage);
     if (!result.valid) return;
     const parsed = parseYaml(yamlText) as ScriptDocument;
     setScript(parsed);
@@ -276,9 +281,9 @@ export function Novel2ScriptApp() {
             )}
           </Panel>
 
-          <Panel
+            <Panel
             title="YAML 编辑器与 Schema 校验"
-            description="生成结果可直接编辑，重新校验后再复制或导出。"
+            description={`生成结果可直接编辑，字段语言会跟随小说语言自动切换为${sourceLanguage === "zh" ? "中文" : "English"}。`}
             action={
               <div className="flex flex-wrap gap-2">
                 <button
