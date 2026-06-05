@@ -78,7 +78,7 @@ docs/                    产品设计、Schema 说明和演示文档
 
 ## Demo 视频
 
-待补充：录制 3 分钟演示视频后，将可访问链接放到这里。
+AI 小说转剧本工具｜Novel2Script AI：https://space.bilibili.com/157322619?spm_id_from=333.1007.0.0
 
 ## 可选优化
 
